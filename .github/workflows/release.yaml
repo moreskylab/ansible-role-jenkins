@@ -11,9 +11,9 @@ name: Release to Ansible Galaxy
     tags:
       - "v*"
 
-defaults:
-  run:
-    working-directory: "moreskylab.jenkins"
+#defaults:
+#  run:
+#    working-directory: "moreskylab.jenkins"
 
 jobs:
 
