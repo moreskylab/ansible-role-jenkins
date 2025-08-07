@@ -10,7 +10,7 @@
         state: present
     - name: Install Java (OpenJDK)
       ansible.builtin.apt:
-        name: openjdk-11-jdk
+        name: openjdk-21-jdk
         state: present
         update_cache: yes
     - name: Install Jenkins
@@ -35,7 +35,7 @@
         gpgkey: "{{ jenkins_repo_key_url_redhat }}"
     - name: Install Java (OpenJDK)
       ansible.builtin.yum:
-        name: java-11-openjdk
+        name: java-21-openjdk
         state: present
     - name: Install Jenkins
       ansible.builtin.yum:
