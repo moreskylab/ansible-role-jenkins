@@ -1,0 +1,51 @@
+
+- name: Install Jenkins on Debian-based systems
+	block:
+		- name: Add Jenkins repository key
+			ansible.builtin.apt_key:
+				url: "{{ jenkins_repo_key_url_debian }}"
+				state: present
+		- name: Add Jenkins repository
+			ansible.builtin.apt_repository:
+				repo: "{{ jenkins_repo_url_debian }}"
+				state: present
+		- name: Install Java (OpenJDK)
+			ansible.builtin.apt:
+				name: openjdk-11-jdk
+				state: present
+				update_cache: yes
+		- name: Install Jenkins
+			ansible.builtin.apt:
+				name: "jenkins={{ jenkins_version }}"
+				state: present
+				update_cache: yes
+	when: ansible_os_family == 'Debian'
+
+- name: Install Jenkins on RedHat-based systems
+	block:
+		- name: Add Jenkins repository key
+			ansible.builtin.rpm_key:
+				state: present
+				key: "{{ jenkins_repo_key_url_redhat }}"
+		- name: Add Jenkins repository
+			ansible.builtin.yum_repository:
+				name: jenkins
+				description: Jenkins-stable
+				baseurl: "{{ jenkins_repo_url_redhat }}"
+				gpgcheck: yes
+				gpgkey: "{{ jenkins_repo_key_url_redhat }}"
+		- name: Install Java (OpenJDK)
+			ansible.builtin.yum:
+				name: java-11-openjdk
+				state: present
+		- name: Install Jenkins
+			ansible.builtin.yum:
+				name: "jenkins-{{ jenkins_version }}"
+				state: present
+	when: ansible_os_family == 'RedHat'
+
+- name: Ensure Jenkins is started and enabled
+	ansible.builtin.service:
+		name: jenkins
+		state: started
+		enabled: yes
