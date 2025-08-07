@@ -1,0 +1,10 @@
+---
+- name: Test newly created role
+  hosts: localhost
+  become_user: root
+  become: true
+
+  roles:
+    - name: moreskylab.jenkins # Replace with the actual name of your role
+      # You can pass role-specific variables here if needed
+      # my_role_specific_var: "value"
