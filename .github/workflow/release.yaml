@@ -13,7 +13,7 @@ name: Release to Ansible Galaxy
 
 defaults:
   run:
-    working-directory: "moreskylab.apache"
+    working-directory: "moreskylab.jenkins"
 
 jobs:
 
